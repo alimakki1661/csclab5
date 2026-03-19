@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSC 225 Lab 5</title>
+
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg, #dbeafe, #93c5fd);
+}
+
+.container{
+    width:60%;
+    margin:50px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    color:#1e3a8a;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#1d4ed8;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1e40af;
+}
+
+.result{
+    margin-top:20px;
+    padding:15px;
+    background:#f1f5f9;
+    border-left:5px solid #1d4ed8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Registration Page</h1>
+
+    <input type="text" id="firstName" placeholder="First Name">
+    <input type="text" id="lastName" placeholder="Last Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <input type="date" id="dob">
+
+    <button onclick="registerUser()">Register</button>
+
+    <div id="output" class="result"></div>
+</div>
+
+<script>
+
+function registerUser(){
+
+    let first = document.getElementById("firstName").value;
+    let last = document.getElementById("lastName").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let dob = document.getElementById("dob").value;
+
+    // validation
+    if(first === "" || last === "" || email === "" || password === "" || dob === ""){
+        document.getElementById("output").innerHTML = "❌ Registration Failed: All fields are required.";
+        return;
+    }
+
+    if(!(password.includes("!") || password.includes("?"))){
+        document.getElementById("output").innerHTML = "❌ Password must contain ! or ?";
+        return;
+    }
+
+    // user object
+    let user = {
+        firstName: first,
+        lastName: last,
+        email: email,
+        password: password,
+        dob: dob
+    };
+
+    // mask password
+    let maskedPassword = "";
+    for(let i = 0; i < user.password.length; i++){
+        maskedPassword += "*";
+    }
+
+    // output
+    document.getElementById("output").innerHTML = `
+        <h3>✅ Registration Successful!</h3>
+        <p><b>First Name:</b> ${user.firstName}</p>
+        <p><b>Last Name:</b> ${user.lastName}</p>
+        <p><b>Email:</b> ${user.email}</p>
+        <p><b>Password:</b> ${maskedPassword}</p>
+        <p><b>Date of Birth:</b> ${user.dob}</p>
+    `;
+}
+
+</script>
+
+</body>
+</html>
